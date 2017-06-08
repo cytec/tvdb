@@ -5,7 +5,7 @@ type SeriesRequest struct {
 	SeriesID int `json:"id"`
 }
 
-// Series represents a reponse for series information from the TVDB service
+// Series represents a response for series information from the TVDB service
 type Series struct {
 	Added           string   `json:"added"`
 	AirsDayOfWeek   string   `json:"airsDayOfWeek"`
@@ -32,7 +32,8 @@ type Series struct {
 
 // SeriesData represents the list of responses to get series information
 type SeriesData struct {
-	Data Series `json:"data"`
+	Data   Series     `json:"data"`
+	Errors JSONErrors `json:"errors,omitempty"`
 }
 
 // SeriesEpisodesRequest represents a request to get episode information for a series
@@ -47,7 +48,7 @@ type SeriesEpisodesRequest struct {
 	IMDBId       int `json:"imdbId"`
 }
 
-// BasicEpisode represents a reponse for episode information from the TVDB service
+// BasicEpisode represents a response for episode information from the TVDB service
 type BasicEpisode struct {
 	AbsoluteNumber     int    `json:"absoluteNumber"`
 	AiredEpisodeNumber int    `json:"airedEpisodeNumber"`
@@ -70,10 +71,21 @@ type Links struct {
 	PreviousPage int `json:"prev"`
 }
 
-// EpisodeResponses represents the list of responses to get episode information
-type EpisodeResponses struct {
-	Links Links          `json:"links"`
-	Data  []BasicEpisode `json:"data"`
+// SeriesEpisodes represents the list of responses to get episode information
+type SeriesEpisodes struct {
+	Links  Links          `json:"links"`
+	Data   []BasicEpisode `json:"data"`
+	Errors JSONErrors     `json:"errors,omitempty"`
+}
+
+// SeriesEpisodesSummary Returns a summary of the episodes and seasons available for the series.
+type SeriesEpisodesSummary struct {
+	// Number of all aired episodes for this series
+	AiredEpisodes string   `json:"airedEpisodes,omitempty"`
+	AiredSeasons  []string `json:"airedSeasons,omitempty"`
+	// Number of all dvd episodes for this series
+	DvdEpisodes string   `json:"dvdEpisodes,omitempty"`
+	DvdSeasons  []string `json:"dvdSeasons,omitempty"`
 }
 
 // SeriesActorsData contains information about a single actor
